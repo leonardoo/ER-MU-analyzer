@@ -123,6 +123,7 @@ UpgradeLog*.XML
 # Windows image file caches
 Thumbs.db
 
+
 # Folder config file
 Desktop.ini
 
@@ -161,3 +162,8 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+
+
+#sqlite3 DB
+
+*.sqldb

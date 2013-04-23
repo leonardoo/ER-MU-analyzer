@@ -6,6 +6,7 @@ class Citizen(models.Model):
 
 	name = models.CharField(max_length=100)
 	er_id = models.PositiveIntegerField()
+	url_citizen = models.URLField()
 
 class Storage(models.Model):
 
@@ -29,13 +30,13 @@ class Company(models.Model):
 
 
 	class Meta:
-        abstract = True
+		abstract = True
 
 class ManufactureCompany(Company):
 	class Meta:
-        abstract = True
+		abstract = True
 
-    def produce(self):
+	def produce(self):
 		return 100 * self.quality
 
 	def consume(self):
@@ -68,7 +69,7 @@ class MilitaryUnit(models.Model):
 	name = models.CharField(max_length=100)
 	er_id = models.PositiveIntegerField()
 	ulr_img = models.TextField(null=True,blank=True)
-	members = models.ManyToManyField(Citizen, through='Membership')
+	members = models.ManyToManyField(Citizen, through='MUMembers')
 
 class MUMembers(models.Model):
 	person = models.ForeignKey(Citizen)
