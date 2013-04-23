@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--{% load staticfiles %}-->
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Add Citizen Data</title>
+	<!--script type="text/javascript" src={{ static "js/jquery-2.0.0.js"}}></script-->
+	<script type="text/javascript" src="../../static/js/jquery-2.0.0.js"></script>
+	<script type="text/javascript">
+	$("document").ready(function(){
+		var id_company = 0;
+		var select_type = '<select class="selector">'+
+		  				  '<option value="volvo">Raw Food</option>'+
+  						  '<option value="saab">Raw Weapon</option>'+
+						  '<option value="mercedes">Weapon</option>'+
+						  '<option value="audi">Food</option>'+
+						'</select>';
+
+		$("#storage").on('click',function(e){
+			if ($('#storage').is(':checked')) {
+				input = '<label>Storage</label><input type="text" name="q_storage">';
+				$("#citizen_storage").html(input);
+			}
+			else{
+				$("#citizen_storage").html("");
+			}
+
+		});
+
+		$("#company").on('click',function(e){
+
+			if ($('#company').is(':checked')) {
+				$("#citizen_company").show();
+			}
+			else{
+				$("#citizen_company").hide();
+				$("#companies").html("");
+			}
+
+		});
+		var num_click = 0;
+		var elem_select=null;
+
+		change_element = function(e){
+			console.log(1);
+			if(num_click == 0){
+				elem_select = e.currentTarget;
+				num_click++;
+				console.log(2);
+			}
+			
+			if(e.currentTarget == elem_select && num_click>0){		
+				console.log(elem_select.parent());
+				console.log(3);
+				num_click = 0;
+			}
+			
+		}
+
+		var num_company= 0;
+
+		$("#button1").on('click',function(){
+			var select = $(select_type);
+			var div = $('<div id="div'+num_company+'">').append(select);
+			//console.log(div);
+			div.children('select').attr('id',"select"+num_company);
+			var quality = $('<select id="quality'+num_company+'">');
+			for (var i = 1; i < 8; i++) {
+				quality.append('<option value="'+i+'">Q'+i+'</option>');
+			};
+			div.append(quality);
+			div.append($('<label>Quantity</label>'));
+			div.append($('<input name="input'+num_company+'">'));
+			//console.log(div.children('select'));
+			$("#companies").append(div);
+			num_company= 0;
+
+		});
+
+
+
+		$("#citizen_company").hide();
+
+	});
+
+	</script>
+</head>
+<body>
+<div id="citizen_data">
+	<!--{{form.as_p}}-->
+</div>
+<label>add Storage</label>
+<input type="checkbox" id="storage" name="add_Storage" value="Storage">
+<div id="citizen_storage">
+<div></div>
+</div>
+<label>Add Companies</label>
+<input type="checkbox" id="company" name="add_company" value="Storage">
+<div id="citizen_company">
+<button id="button1">Add
+</button>
+<div id="companies">
+</div>
+</div>
+</body>
+</html>
