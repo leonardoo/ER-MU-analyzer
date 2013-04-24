@@ -5,12 +5,13 @@ from django.db import models
 class Citizen(models.Model):
 
 	name = models.CharField(max_length=100)
-	er_id = models.PositiveIntegerField()
+	citizen_id_er = models.PositiveIntegerField()
 	url_citizen = models.URLField()
 
 class Storage(models.Model):
 
 	owner_citizen = models.ForeignKey('citizen')
+	quantity = models.PositiveIntegerField()
 	date_update = models.DateField(auto_now=True)
 
 class Company(models.Model):
@@ -68,7 +69,7 @@ class RawFoodCompany(RawCompany):
 class MilitaryUnit(models.Model):
 	name = models.CharField(max_length=100)
 	er_id = models.PositiveIntegerField()
-	ulr_img = models.TextField(null=True,blank=True)
+	url_img = models.TextField(null=True,blank=True)
 	members = models.ManyToManyField(Citizen, through='MUMembers')
 
 class MUMembers(models.Model):

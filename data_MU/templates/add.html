@@ -7,11 +7,11 @@
 	<script type="text/javascript">
 	$("document").ready(function(){
 		var id_company = 0;
-		var select_type = '<select class="selector">'+
-		  				  '<option value="volvo">Raw Food</option>'+
-  						  '<option value="saab">Raw Weapon</option>'+
-						  '<option value="mercedes">Weapon</option>'+
-						  '<option value="audi">Food</option>'+
+		var select_type = '<select>'+
+		  				  '<option value="1">Raw Food</option>'+
+  						  '<option value="2">Raw Weapon</option>'+
+						  '<option value="3">Weapon</option>'+
+						  '<option value="4">Food</option>'+
 						'</select>';
 
 		$("#storage").on('click',function(e){
@@ -44,7 +44,8 @@
 			var div = $('<div id="div'+num_company+'">').append(select);
 			//console.log(div);
 			div.children('select').attr('id',"select"+num_company);
-			var quality = $('<select id="quality'+num_company+'">');
+			div.children('select').attr('name',"select"+num_company);
+			var quality = $('<select id="quality'+num_company+'" name="quality'+num_company+'">');
 			for (var i = 1; i < 8; i++) {
 				quality.append('<option value="'+i+'">Q'+i+'</option>');
 			};
@@ -53,7 +54,7 @@
 			div.append($('<input name="input'+num_company+'">'));
 			//console.log(div.children('select'));
 			$("#companies").append(div);
-			num_company= 0;
+			num_company++;
 
 		});
 
@@ -69,7 +70,8 @@
 <form method="post">
 {% csrf_token %}
 <div id="citizen_data">
-	{{form.as_p}}
+	<p><label for="id_name">Name:</label> <input id="id_name" maxlength="100" name="name" type="text"></p>
+	<p><label for="url_or_id">Citizen id or Url:</label> <input id="url_or_id" name="url_or_id" type="text"></p>
 </div>
 <label>add Storage</label>
 <input type="checkbox" id="storage" name="add_Storage" value="Storage">
@@ -83,6 +85,9 @@
 </button>
 <div id="companies">
 </div>
+</div>
+<div>
+<button>Send</button>
 </div>
 </form>
 </body>
