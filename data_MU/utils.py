@@ -22,18 +22,17 @@ def is_int(a):
 
 def get_company(company):
 	
-	if company["company"] == 1:
-		fabric = RawFoodCompany()
-	elif company["company"] == 2:
-		fabric = RawWeaponCompany()
-	elif company["company"] == 3:
-		fabric = WeaponCompany()
+	if int(company["company"]) == 1:
+		fabric = RawFoodCompany(type_company=1)
+	elif int(company["company"]) == 2:
+		fabric = RawWeaponCompany(type_company=2)
+	elif int(company["company"]) == 3:
+		fabric = WeaponCompany(type_company=3)
 	else:
-		fabric = FoodCompany()
+		fabric = FoodCompany(type_company=4)
 
 
-	if (company["company"] == 1 or company["company"] == 2)
-	    and company["quality"] > 5:
+	if (company["company"] == 1 or company["company"] == 2) and company["quality"] > 5:
 
 	    fabric.quality = 5
 	else:

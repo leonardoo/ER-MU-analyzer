@@ -11,14 +11,22 @@ class Citizen(models.Model):
 class Storage(models.Model):
 
 	owner_citizen = models.ForeignKey('citizen')
-	quantity = models.PositiveIntegerField()
+	quantity = models.PositiveIntegerField(default=0)
 	date_update = models.DateField(auto_now=True)
 
 class Company(models.Model):
+	TYPES_COMPANIES = {
+		("1",'RawFood'),
+  		("2",'RawWeapon'),
+		("3",'Weapon'),
+		("4",'Food'),
+	}
+
 	owner_citizen = models.ForeignKey('citizen')
 	quality = models.PositiveIntegerField()
 	quantity = models.PositiveIntegerField()
-	date_update = models.DateField(auto_now=True)	
+	date_update = models.DateField(auto_now=True)
+	type_company = models.CharField(max_length=1, choices=TYPES_COMPANIES)
 
 	def cost(self):
 		return 0
@@ -56,6 +64,10 @@ class FoodCompany(ManufactureCompany):
 	pass
 
 class RawCompany(Company):
+
+	class Meta:
+		abstract = True
+
 	def produce(self):
 		return 35*self.quality
 
