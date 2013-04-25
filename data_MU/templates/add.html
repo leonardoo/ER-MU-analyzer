@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Add Citizen Data</title>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 	<script type="text/javascript">
 	$("document").ready(function(){
 		var id_company = 0;
@@ -73,10 +73,42 @@
 	<p><label for="id_name">Name:</label> <input id="id_name" maxlength="100" name="name" type="text"></p>
 	<p><label for="url_or_id">Citizen id or Url:</label> <input id="url_or_id" name="url_or_id" type="text"></p>
 </div>
-<label>add Storage</label>
+<label>Add Storage</label>
 <input type="checkbox" id="storage" name="add_Storage" value="Storage">
 <div id="citizen_storage">
 <div></div>
+</div>
+<label>Add Training grounds</label>
+<div id="TG">
+	<label>Weights Room</label>
+	<select name="weights_room">
+		<option value="1">Q1</option>
+  		<option value="2">Q2</option>
+		<option value="3">Q3</option>
+		<option value="4">Q4</option>
+	</select>
+	<label>Climbing Center</label>
+	<select name="climbing_center">
+		<option value="1">Q1</option>
+  		<option value="2">Q2</option>
+		<option value="3">Q3</option>
+		<option value="4">Q4</option>
+	</select>
+	<label>Shooting Range</label>
+	<select name="shooting_range">
+		<option value="1">Q1</option>
+  		<option value="2">Q2</option>
+		<option value="3">Q3</option>
+		<option value="4">Q4</option>
+	</select>
+	<label>Special Forces Center</label>
+	<select name="special_forces_center">
+		<option value="1">Q1</option>
+  		<option value="2">Q2</option>
+		<option value="3">Q3</option>
+		<option value="4">Q4</option>
+	</select>
+
 </div>
 <label>Add Companies</label>
 <input type="checkbox" id="company" name="add_company" value="Storage">
