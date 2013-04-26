@@ -88,3 +88,14 @@ class MUMembers(models.Model):
 	person = models.ForeignKey(Citizen)
 	mu_group = models.ForeignKey(MilitaryUnit)
 	date_joined = models.DateField()
+
+class TraningGround(models.Model):
+
+	owner_citizen = models.ForeignKey('citizen')
+	weights_room    = models.PositiveIntegerField()
+	climbing_center = models.PositiveIntegerField()
+	shooting_range  = models.PositiveIntegerField()
+	special_forces  = models.PositiveIntegerField()
+
+	def gain_for_day(self):
+		return weights_room * 5 + climbing_center * 2.5 + shooting_range * 5 + special_forces * 10
