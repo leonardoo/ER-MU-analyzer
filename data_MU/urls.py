@@ -6,3 +6,4 @@ urlpatterns = patterns('data_MU.views',
     url(r'^get/','view_user_mu_data',name='data_user'),
     url(r'^data/','data_user',name='data_user'),
 )
+

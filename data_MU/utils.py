@@ -1,16 +1,17 @@
 from .models import WeaponCompany,FoodCompany, RawFoodCompany,RawWeaponCompany
+
 def set_dict(dic,key,data,value):
-	if key not in dic:
-		dic[key]={}
+	pk =key+data 
+	if pk not in dic:
+		dic[pk]={}
 
-	company = dic[key]
+	company = dic[pk]
 
-	if data[:6] == "select":
-		company["company"] = value
-	elif data[:7] == "quality":
-		company["quality"] = value
-	elif data[:5] == "input":
-		company["quantity"] = value
+	company["company"]=key
+	company["quality"]=data
+	company["quantity"]=value
+
+
 
 def is_int(a):
 	"""Returns true if a is an interger"""
@@ -22,17 +23,17 @@ def is_int(a):
 
 def get_company(company):
 	
-	if int(company["company"]) == 1:
+	if company["company"] == "rawfood":
 		fabric = RawFoodCompany(type_company=1)
-	elif int(company["company"]) == 2:
+	elif company["company"] == "rawweapon":
 		fabric = RawWeaponCompany(type_company=2)
-	elif int(company["company"]) == 3:
-		fabric = WeaponCompany(type_company=3)
-	else:
-		fabric = FoodCompany(type_company=4)
+	elif company["company"] == "weapon":
+		fabric = FoodCompany(type_company=3)
+	elif company["company"] == "food":
+		fabric = WeaponCompany(type_company=4)
 
 
-	if (company["company"] == 1 or company["company"] == 2) and company["quality"] > 5:
+	if "raw" in company["company"] and int(company["quality"]) > 5:
 
 	    fabric.quality = 5
 	else:

@@ -1,0 +1,72 @@
+body{
+	margin-left: 1%;
+}
+
+a.dropdown-toggle:hover {
+	text-decoration: none;
+}
+#companies div ul li{
+	display: inline-block;
+
+}
+
+#TG div ul li{
+	display: block;
+
+}
+#TG b.caret{
+	padding-top: 100%;
+}
+
+.input{
+	margin-top: 2%;
+}
+
+.quality{
+	background: url("../img/tiny_stars_q7.png") no-repeat;
+
+	clear: both;
+	display: block;
+	height: 17px;
+	
+	left: 16px;
+	bottom: 0%;
+	position: relative;
+}
+
+.raw{
+	top:60px;
+
+}
+
+.manufacture{
+	top:76px;
+}
+
+.q1{
+	
+}
+
+.q2{
+	background-position: 0 -17px;
+}
+
+.q3{
+	background-position: 0 -34px;	
+}
+
+.q4{
+	background-position: 0 -51px;
+}
+
+.q5{
+	background-position: 0 -68px;	
+}
+
+.q6{
+	background-position: 0 -85px;	
+}
+
+.q7{
+	background-position: 0 -102px;	
+}

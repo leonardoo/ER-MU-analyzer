@@ -1,18 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
+	{% load static from staticfiles %}
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	{% static "normalize.css" as normalize  %}
+	<link href="{{normalize}}" rel="stylesheet" type="text/css">
+	{% static "bootstrap.css" as 			bootstrapcss%}
+	<link href="{{bootstrapcss}}" rel="stylesheet" type="text/css">
+	{% static "bootstrap-responsive.css" as responsive  %}
+	<link href="{{responsive  }}" rel="stylesheet" type="text/css">
+	{% static "base.css" as base%}
+	<link href="{{base}}" rel="stylesheet" type="text/css">
 	<title>Add Citizen Data</title>
+	{% static "jquery.js" as jquery%}
+	{% if jquery == "" %}
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	{% else %}
+	<script src="{{jquery}}"></script>
+	{% endif%}
+	{% static "bootstrap.js" as bootstrap%}
+	<script src="{{bootstrap}}"></script>
+	
 	<script type="text/javascript">
 	$("document").ready(function(){
-		var id_company = 0;
-		var select_type = '<select>'+
-		  				  '<option value="1">Raw Food</option>'+
-  						  '<option value="2">Raw Weapon</option>'+
-						  '<option value="3">Weapon</option>'+
-						  '<option value="4">Food</option>'+
-						'</select>';
+
+		$("#Training ul li").on('click',function(e){
+
+			var parents =$(e.target).parentsUntil("#Training");
+			var parent = $(parents.get(1));
+			var selected = parent.attr('class');
+			if(selected != undefined){
+				selected = selected.charAt(selected.length -1);
+				var last = parents.last();
+				var id =last.attr('id');
+				childs = parent.children().clone();
+				$("#"+id+" a.dropdown-toggle").html(childs);
+				$("#"+id+" a.dropdown-toggle").append('<span class="caret">');
+				$("#"+id+" input").val(selected)
+			}
+			
+
+			
+			
+		});
 
 		$("#storage").on('click',function(e){
 			if ($('#storage').is(':checked')) {
@@ -25,42 +55,21 @@
 
 		});
 
-		$("#company").on('click',function(e){
+		$("#companies img").on('click',function(e){
+			
+			var id = $(e.target).parent().parent().attr('id');
+			var child = $("#"+id+ " div.input").children();
+			if(child.index() == -1){
+				var tam = $(e.target).height();
+				var input = $('<input name='+id+'>');
+				input.css("width",tam)
+				$("#"+id+ " div.input").html($("<center>").append(input));	
+			}else{
+				$("#"+id+ " div.input").html("");
 
-			if ($('#company').is(':checked')) {
-				$("#citizen_company").show();
 			}
-			else{
-				$("#citizen_company").hide();
-				$("#companies").html("");
-			}
-
+			
 		});
-
-		var num_company= 0;
-
-		$("#button1").on('click',function(){
-			var select = $(select_type);
-			var div = $('<div id="div'+num_company+'">').append(select);
-			//console.log(div);
-			div.children('select').attr('id',"select"+num_company);
-			div.children('select').attr('name',"select"+num_company);
-			var quality = $('<select id="quality'+num_company+'" name="quality'+num_company+'">');
-			for (var i = 1; i < 8; i++) {
-				quality.append('<option value="'+i+'">Q'+i+'</option>');
-			};
-			div.append(quality);
-			div.append($('<label>Quantity</label>'));
-			div.append($('<input name="input'+num_company+'">'));
-			//console.log(div.children('select'));
-			$("#companies").append(div);
-			num_company++;
-
-		});
-
-
-
-		$("#citizen_company").hide();
 
 	});
 
@@ -79,47 +88,428 @@
 <div></div>
 </div>
 <label>Add Training grounds</label>
-<div id="TG">
-	<label>Weights Room</label>
-	<select name="weights_room">
-		<option value="1">Q1</option>
-  		<option value="2">Q2</option>
-		<option value="3">Q3</option>
-		<option value="4">Q4</option>
-	</select>
-	<label>Climbing Center</label>
-	<select name="climbing_center">
-		<option value="1">Q1</option>
-  		<option value="2">Q2</option>
-		<option value="3">Q3</option>
-		<option value="4">Q4</option>
-	</select>
-	<label>Shooting Range</label>
-	<select name="shooting_range">
-		<option value="1">Q1</option>
-  		<option value="2">Q2</option>
-		<option value="3">Q3</option>
-		<option value="4">Q4</option>
-	</select>
-	<label>Special Forces</label>
-	<select name="special_forces">
-		<option value="1">Q1</option>
-  		<option value="2">Q2</option>
-		<option value="3">Q3</option>
-		<option value="4">Q4</option>
-	</select>
+<div id="Training" class="row">
+
+	<div id="TG1" class="dropdown span1	">
+		<input type="hidden" name="TG1" value="1">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#" >
+			<center><img src="http://www.erepublik.com/images/modules/manager/train_upgrades/training_grounds_q1.png"></center>
+			<center><img src="{{MEDIA_URL}}img/q1.png"></center>
+		<span class="caret"></span>
+		</a>
+		<ul class="dropdown-menu" role="menu">
+			<li>
+			<div class="Training_ground1">
+				<center><img src="http://www.erepublik.com/images/modules/manager/train_upgrades/training_grounds_q1.png"></center>
+				<center><img src="{{MEDIA_URL}}img/q1.png"></center>
+			</div>
+			</li>
+			<li>
+			<div class="Training_ground2">
+				<center><img src="http://www.erepublik.com/images/modules/manager/train_upgrades/training_grounds_q2.png"></center>
+				<center><img src="{{MEDIA_URL}}img/q2.png"></center>
+			</div>
+			</li>
+			<li>
+			<div class="Training_ground3">
+				<center><img src="http://www.erepublik.com/images/modules/manager/train_upgrades/training_grounds_q3.png"></center>
+				<center><img src="{{MEDIA_URL}}img/q3.png"></center>
+			</div>
+			</li>
+			<li>
+			<div class="Training_ground4">
+				<center><img src="http://www.erepublik.com/images/modules/manager/train_upgrades/training_grounds_q4.png"></center>
+				<center><img src="{{MEDIA_URL}}img/q4.png"></center>
+			</div>
+			</li>
+		</ul>
+	</div>
+	<div id="TG2" class="dropdown span1">
+		<input type="hidden" name="TG2" value="1">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#" >
+			<center><img src="http://www.erepublik.net/images/modules/manager/train_upgrades/train_1_q1.png"></center>
+			<center><img src="{{MEDIA_URL}}img/q1.png"></center>
+		<span class="caret"></span>
+		</a>
+		<ul class="dropdown-menu" role="menu">
+			<li>
+			<div class="Training_ground1">
+				<center><img src="http://www.erepublik.net/images/modules/manager/train_upgrades/train_1_q1.png"></center>
+				<center><img src="{{MEDIA_URL}}img/q1.png"></center>
+			</div>
+			</li>
+			<li>
+			<div class="Training_ground2">
+				<center><img src="http://www.erepublik.net/images/modules/manager/train_upgrades/train_1_q2.png"></center>
+				<center><img src="{{MEDIA_URL}}img/q2.png"></center>
+			</div>
+			</li>
+			<li>
+			<div class="Training_ground3">
+				<center><img src="http://www.erepublik.net/images/modules/manager/train_upgrades/train_1_q3.png"></center>
+				<center><img src="{{MEDIA_URL}}img/q3.png"></center>
+			</div>
+			</li>
+			<li>
+			<div class="Training_ground4">
+				<center><img src="http://www.erepublik.net/images/modules/manager/train_upgrades/train_1_q4.png"></center>
+				<center><img src="{{MEDIA_URL}}img/q4.png"></center>
+			</div>
+			</li>
+		</ul>
+	</div>
+	<div id="TG3" class="dropdown span1">
+		<input type="hidden" name="TG3" value="1">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#" >
+			<center><img src="http://www.erepublik.net/images/modules/manager/train_upgrades/train_2_q1.png"></center>
+			<center><img src="{{MEDIA_URL}}img/q1.png"></center>
+		<span class="caret"></span>
+		</a>
+		<ul class="dropdown-menu" role="menu">
+			<li>
+			<div class="Training_ground1">
+				<center><img src="http://www.erepublik.net/images/modules/manager/train_upgrades/train_2_q1.png"></center>
+				<center><img src="{{MEDIA_URL}}img/q1.png"></center>
+			</div>
+			</li>
+			<li>
+			<div class="Training_ground2">
+				<center><img src="http://www.erepublik.net/images/modules/manager/train_upgrades/train_2_q2.png"></center>
+				<center><img src="{{MEDIA_URL}}img/q2.png"></center>
+			</div>
+			</li>
+			<li>
+			<div class="Training_ground3">
+				<center><img src="http://www.erepublik.net/images/modules/manager/train_upgrades/train_2_q3.png"></center>
+				<center><img src="{{MEDIA_URL}}img/q3.png"></center>
+			</div>
+			</li>
+			<li>
+			<div class="Training_ground4">
+				<center><img src="http://www.erepublik.net/images/modules/manager/train_upgrades/train_2_q4.png"></center>
+				<center><img src="{{MEDIA_URL}}img/q4.png"></center>
+			</div>
+			</li>
+		</ul>
+	</div>
+	<div id="TG4" class="dropdown span1">
+		<input type="hidden" name="TG4" value="1">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#" >
+			<center><img src="http://www.erepublik.net/images/modules/manager/train_upgrades/train_3_q1.png"></center>
+			<center><img src="{{MEDIA_URL}}img/q1.png"></center>
+		<span class="caret"></span>
+		</a>
+		<ul class="dropdown-menu" role="menu">
+			<li>
+			<div class="Training_ground1">
+				<center><img src="http://www.erepublik.net/images/modules/manager/train_upgrades/train_3_q1.png"></center>
+				<center><img src="{{MEDIA_URL}}img/q1.png"></center>
+			</div>
+			</li>
+			<li>
+			<div class="Training_ground2">
+				<center><img src="http://www.erepublik.net/images/modules/manager/train_upgrades/train_3_q2.png"></center>
+				<center><img src="{{MEDIA_URL}}img/q2.png"></center>
+			</div>
+			</li>
+			<li>
+			<div class="Training_ground3">
+				<center><img src="http://www.erepublik.net/images/modules/manager/train_upgrades/train_3_q3.png"></center>
+				<center><img src="{{MEDIA_URL}}img/q3.png"></center>
+			</div>
+			</li>
+			<li>
+			<div class="Training_ground4">
+				<center><img src="http://www.erepublik.net/images/modules/manager/train_upgrades/train_3_q4.png"></center>
+				<center><img src="{{MEDIA_URL}}img/q4.png"></center>
+			</div>
+			</li>
+		</ul>
+	</div>
 
 </div>
 <label>Add Companies</label>
-<input type="checkbox" id="company" name="add_company" value="Storage">
 <div id="citizen_company">
-<button id="button1" type="button">Add
-</button>
-<div id="companies">
-</div>
+	<div id="companies">
+		<div id="rawfood">
+		<ul>
+			<li id="rawfood1">
+			<div class="div">
+				<span class="raw quality q1"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/buildings/7.png">
+			</div>
+			<div class="input">
+			</div>
+			</li>
+			<li id="rawfood2">
+			<div class="div">
+				<span class="raw quality q2"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/buildings/8.png">
+			</div>
+			<div class="input">
+			</div>
+			</li>
+			<li id="rawfood3">
+			<div class="div">
+				<span class="raw quality q3"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/buildings/9.png">
+			</div>
+			<div class="input">
+			</div>
+			</li>
+			<li id="rawfood4">
+			<div class="div">
+				<span class="raw quality q4"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/buildings/10.png">
+			</div>
+			<div class="input">
+			</div>
+			</li>
+			<li id="rawfood5">
+			<div class="div">
+				<span class="raw quality q5"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/buildings/11.png">
+			</div>
+			<div class="input">
+			</div>
+			</li>
+		</ul>
+		</div>
+		<div id="rawweapon">
+		<ul>
+			<li id="rawweapon1">
+			<div class="div">
+				<span class="raw quality q1"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/buildings/12.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+			<li id="rawweapon2">
+			<div class="div">
+				<span class="raw quality q2"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/buildings/13.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+			<li id="rawweapon3">
+			<div class="div">
+				<span class="raw quality q3"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/buildings/14.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+			<li id="rawweapon4">
+			<div class="div">
+				<span class="raw quality q4"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/buildings/15.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+			<li id="rawweapon5">
+			<div class="div">
+				<span class="raw quality q5"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/buildings/16.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+		</ul>	
+		</div>
+		<div id="food">
+		<ul>
+			<li id="food1">
+			<div class="div">
+				<span class="manufacture quality q1"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/modules/manager/factory_buildings/1_1.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+			<li id="food2">
+			<div class="div">
+				<span class="manufacture quality q2"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/modules/manager/factory_buildings/1_2.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+			<li id="food3">
+			<div class="div">
+				<span class="manufacture quality q3"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/modules/manager/factory_buildings/1_3.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+			<li id="food4">
+			<div class="div">
+				<span class="manufacture quality q4"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/modules/manager/factory_buildings/1_4.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+			<li id="food5">
+			<div class="div">
+				<span class="manufacture quality q5"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/modules/manager/factory_buildings/1_5.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+			<li id="food6">
+			<div class="div">
+				<span class="manufacture quality q6"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/modules/manager/factory_buildings/1_6.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+			<li id="food7">
+			<div class="div">
+				<span class="manufacture quality q7"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/modules/manager/factory_buildings/1_7.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+		</ul>	
+		</div>
+		<div id="weapon">
+		<ul>
+			<li id="weapon1">
+			<div class="div">
+				<span class="manufacture quality q1"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/modules/manager/factory_buildings/2_1.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+			<li id="weapon2">
+			<div class="div">
+				<span class="manufacture quality q2"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/modules/manager/factory_buildings/2_2.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+			<li id="weapon3">
+			<div class="div">
+				<span class="manufacture quality q3"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/modules/manager/factory_buildings/2_3.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+			<li id="weapon4">
+			<div class="div">
+				<span class="manufacture quality q4"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/modules/manager/factory_buildings/2_4.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+			<li id="weapon5">
+			<div class="div">
+				<span class="manufacture quality q5"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/modules/manager/factory_buildings/2_5.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+			<li id="weapon6">
+			<div class="div">
+				<span class="manufacture quality q6"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/modules/manager/factory_buildings/2_6.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+			<li id="weapon7">
+			<div class="div">
+				<span class="manufacture quality q7"></span>
+			</div>
+			<div>
+				<img src="http://www.erepublik.net/images/modules/manager/factory_buildings/2_7.png">
+			</div>
+			<div class="input">
+			</div>
+			
+			</li>
+		</ul>
+		</div>
+	</div>
 </div>
 <div>
-<button>Send</button>
+	<button class="btn btn-primary">Send</button>
 </div>
 </form>
 </body>

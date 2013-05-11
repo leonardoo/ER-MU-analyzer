@@ -14,7 +14,6 @@ from django.core.exceptions import ValidationError
 
 #python standard
 import utils as util
-import re
 
 @transaction.commit_on_success
 def add_datauser(request):
@@ -24,13 +23,13 @@ def add_datauser(request):
 	if request.POST:
 		
 		companies = {}
-		prog = re.compile('\D+')
 		storage = ""
 		for i in request.POST.keys():
-			if i[:6] == "select" or i[:7] == "quality" or i[:5] == "input":
-				result = prog.split(i)
-				key = result[1]
-				util.set_dict(companies,key,i,request.POST[i])
+			if ("food" in i) or ("weapon" in i):
+				quality_v = i[len(i)-1:]
+				key = i[:len(i)-1]
+
+				util.set_dict(companies,key,quality_v,request.POST[i])
 
 		if "q_storage" in request.POST:
 			storage = request.POST["q_storage"]
@@ -68,10 +67,10 @@ def add_datauser(request):
 				cit.save()
 				
 				Tg = TraningGround(owner_citizen=cit)
-				Tg.weights_room = request.POST['weights_room']
-				Tg.climbing_center = request.POST['climbing_center']
-				Tg.shooting_range = request.POST['shooting_range']
-				Tg.special_forces = request.POST['special_forces']
+				Tg.weights_room    = request.POST['TG1']
+				Tg.climbing_center = request.POST['TG2']
+				Tg.shooting_range  = request.POST['TG3']
+				Tg.special_forces  = request.POST['TG4']
 				Tg.save()
 
 				sto=Storage(owner_citizen=cit)
@@ -179,16 +178,13 @@ def data_user(request):
 								  'TG3': TG.shooting_range,
 								  'TG4': TG.special_forces}
 
-		return render_to_response('data_MU/templates/test.html',
+		return render_to_response('data_MU/templates/data_user_company.html',
 				{'companies':data_companies,
 				'TG':TG_data}
 				,context_instance = RequestContext(request))
 
 	return render_to_response('data_MU/templates/blank.html'
 				,context_instance = RequestContext(request))
-
-
-
 
 
 def view_user_mu_data(request):
